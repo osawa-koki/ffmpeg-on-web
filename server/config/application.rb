@@ -36,5 +36,14 @@ module Server
     config.middleware.use config.session_store, config.session_options
 
     Rails.application.routes.default_url_options[:only_path] = true
+
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+                 headers: :any,
+                 methods: %i[get post put patch delete options head]
+      end
+    end
   end
 end
