@@ -50,7 +50,7 @@ export default function LoginPage (): React.JSX.Element {
 
   return (
     <>
-      <div id='Login'>
+      <div id='Signin'>
         <h1>Signin</h1>
         <Form.Group controlId='email' className='my-3'>
           <Form.Label>Email</Form.Label>

@@ -9,7 +9,7 @@ import setting from '@/setting'
 import { SharedContext } from '../layout'
 
 export default function LoginPage (): React.JSX.Element {
-  const { shared, setShared } = useContext(SharedContext)
+  const { setShared } = useContext(SharedContext)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -53,8 +53,8 @@ export default function LoginPage (): React.JSX.Element {
 
   return (
     <>
-      <div id='Login'>
-        <h1>Login</h1>
+      <div id='SignUp'>
+        <h1>SignUp</h1>
         <Form.Group controlId='email' className='my-3'>
           <Form.Label>Email</Form.Label>
           <Form.Control
