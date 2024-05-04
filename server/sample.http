@@ -30,7 +30,7 @@ client: <client>
 ###
 
 # ユーザ情報取得
-GET http://localhost:3000/api/v1/auth/validate_token
+GET http://localhost:3000/api/v1/users
 uid: user@example.com
 access-token: <access-token>
 client: <client>
