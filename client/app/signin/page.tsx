@@ -11,7 +11,7 @@ import { SharedContext } from '../layout'
 export default function LoginPage (): React.JSX.Element {
   const { shared, setShared } = useContext(SharedContext)
 
-  const login = () => {
+  const signIn = () => {
     if (shared.email == null || shared.password == null) {
       return
     }
@@ -83,7 +83,7 @@ export default function LoginPage (): React.JSX.Element {
             }}
           />
         </Form.Group>
-        <Button variant='primary' type='button' onClick={login}>
+        <Button variant='primary' type='button' onClick={signIn}>
         SignIn
         </Button>
       </div>
