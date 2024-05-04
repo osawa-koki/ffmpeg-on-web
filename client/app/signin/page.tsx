@@ -11,7 +11,7 @@ import { SharedContext } from '../layout'
 export default function LoginPage (): React.JSX.Element {
   const { shared, setShared } = useContext(SharedContext)
 
-  const signIn = () => {
+  const signIn = (): void => {
     if (shared.email == null || shared.password == null) {
       return
     }

@@ -6,7 +6,6 @@ import Image from 'next/image'
 import setting from '@/setting'
 
 export default function Home (): React.JSX.Element {
-
   return (
     <>
       <div id='Index' className='d-flex flex-column align-items-center'>

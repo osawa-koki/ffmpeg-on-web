@@ -15,7 +15,7 @@ export default function LoginPage (): React.JSX.Element {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
-  const signUp = () => {
+  const signUp = (): void => {
     fetch(`${setting.apiPath}/api/v1/auth`, {
       method: 'POST',
       mode: 'cors',
@@ -60,7 +60,7 @@ export default function LoginPage (): React.JSX.Element {
           <Form.Control
             type='email'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { setEmail(e.target.value) }}
           />
         </Form.Group>
         <Form.Group controlId='password' className='my-3'>
@@ -68,7 +68,7 @@ export default function LoginPage (): React.JSX.Element {
           <Form.Control
             type='password'
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => { setPassword(e.target.value) }}
           />
         </Form.Group>
         <Form.Group controlId='confirmPassword' className='my-3'>
@@ -76,7 +76,7 @@ export default function LoginPage (): React.JSX.Element {
           <Form.Control
             type='password'
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => { setConfirmPassword(e.target.value) }}
           />
         </Form.Group>
         <Button variant='primary' type='button' onClick={signUp}>

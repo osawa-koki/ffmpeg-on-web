@@ -13,7 +13,7 @@ export default function FFmpegPage (): React.JSX.Element {
 
   const [file, setFile] = useState<File | null>(null)
 
-  const convert = () => {
+  const convert = (): void => {
     const { uid, accessToken, client } = shared
     if (uid == null || accessToken == null || client == null) {
       toast.error('Please login')
@@ -29,17 +29,17 @@ export default function FFmpegPage (): React.JSX.Element {
       method: 'POST',
       mode: 'cors',
       headers: {
-        'Uid': uid,
+        Uid: uid,
         'Access-Token': accessToken,
-        'Client': client
+        Client: client
       },
       body: formData
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
           throw new Error('Convert failed')
         }
-        return response.json()
+        return await response.json()
       })
       .then(() => {
         toast.success('Convert success')
