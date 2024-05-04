@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation'
 
 import { ToastContainer } from 'react-toastify'
 
+import 'react-toastify/dist/ReactToastify.css'
+
 import '@/styles/style.scss'
 import '@/styles/menu.scss'
 
@@ -15,6 +17,8 @@ interface Shared {
   uid: string | null
   accessToken: string | null
   client: string | null
+  email: string | null
+  password: string | null
 }
 
 interface SharedSet {
@@ -23,6 +27,8 @@ interface SharedSet {
 }
 
 export const SharedContext = createContext({} as unknown as SharedSet)
+
+const sharedDataKey = 'sharedData'
 
 export default function RootLayout ({
   children
@@ -37,12 +43,30 @@ export default function RootLayout ({
     uid: null,
     accessToken: null,
     client: null,
+    email: null,
+    password: null
   })
 
   useEffect(() => {
     const path = window.location.pathname
     setCurrentPage(path)
   }, [pathname])
+
+  useEffect(() => {
+    const data = localStorage.getItem(sharedDataKey)
+    if (data != null) {
+      const sharedData = JSON.parse(data)
+      setShared(sharedData)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (Object.values(shared).every((v) => v === null)) {
+      localStorage.removeItem(sharedDataKey)
+      return
+    }
+    localStorage.setItem(sharedDataKey, JSON.stringify(shared))
+  }, [shared])
 
   return (
     <html lang='ja'>
@@ -62,7 +86,7 @@ export default function RootLayout ({
             shared,
             setShared
           }}>
-            {children}
+            <main>{children}</main>
           </SharedContext.Provider>
           <Menu currentPage={currentPage} />
           <ToastContainer />
