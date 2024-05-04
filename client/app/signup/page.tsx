@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 import setting from '@/setting'
 
-import { SharedContext } from '../layout'
+import { SharedContext } from '../SharedContext'
 
 export default function LoginPage (): React.JSX.Element {
   const { setShared } = useContext(SharedContext)

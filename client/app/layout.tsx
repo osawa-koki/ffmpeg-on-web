@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 import { ToastContainer } from 'react-toastify'
@@ -13,20 +13,7 @@ import '@/styles/menu.scss'
 import setting from '@/setting'
 import Menu from '@/components/Menu'
 
-interface Shared {
-  uid: string | null
-  accessToken: string | null
-  client: string | null
-  email: string | null
-  password: string | null
-}
-
-interface SharedSet {
-  shared: Shared
-  setShared: React.Dispatch<React.SetStateAction<Shared>>
-}
-
-export const SharedContext = createContext({} as unknown as SharedSet)
+import { SharedContext } from './SharedContext'
 
 const sharedDataKey = 'sharedData'
 
