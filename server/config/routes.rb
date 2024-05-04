@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       mount_devise_token_auth_for 'User', at: 'auth'
 
       resources :users, only: [:index]
+      resources :inputs, only: %i[index create show destroy]
     end
   end
 end
