@@ -14,6 +14,7 @@ import setting from '@/setting'
 import Menu from '@/components/Menu'
 
 interface Shared {
+  apiPath: any
   uid: string | null
   accessToken: string | null
   client: string | null
