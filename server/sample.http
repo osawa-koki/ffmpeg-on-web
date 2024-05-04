@@ -1,0 +1,44 @@
+# ユーザ登録
+POST http://localhost:3000/api/v1/auth
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+
+###
+
+# ログイン
+POST http://localhost:3000/api/v1/auth/sign_in
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password"
+}
+
+###
+
+# ログアウト
+DELETE http://localhost:3000/api/v1/auth/sign_out
+uid: user@example.com
+access-token: <access-token>
+client: <client>
+
+###
+
+# ユーザ情報取得
+GET http://localhost:3000/api/v1/users
+uid: user@example.com
+access-token: <access-token>
+client: <client>
+
+###
+
+# ユーザ削除
+DELETE http://localhost:3000/api/v1/auth
+uid: user@example.com
+access-token: <access-token>
+client: <client>
