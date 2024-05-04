@@ -4,6 +4,7 @@ on: [ push ]
 
 env:
   server-directory: ./server/
+  client-directory: ./client/
 
 jobs:
   server-ci:
@@ -15,23 +16,64 @@ jobs:
       run:
         working-directory: ${{ env.server-directory }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Use Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-    - name: Install dependencies
-      run: |
-        gem install bundler
-        bundle install
-    - name: Run linter
-      run: rubocop
-    - name: Create db
-      run: RAILS_ENV=test rails db:create
-    - name: Migrate db
-      run: RAILS_ENV=test rails db:migrate
-    - name: Seed db
-      run: RAILS_ENV=test rails db:seed
-    - name: Run tests
-      run: rails test
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Use Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+      - name: Run linter
+        run: rubocop
+      - name: Create db
+        run: RAILS_ENV=test rails db:create
+      - name: Migrate db
+        run: RAILS_ENV=test rails db:migrate
+      - name: Seed db
+        run: RAILS_ENV=test rails db:seed
+      - name: Run tests
+        run: rails test
+  client-ci:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    defaults:
+      run:
+        working-directory: ${{ env.client-directory }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        id: node_modules_cache_id
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.client-directory }}node_modules
+          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('./**/yarn.lock') }}
+      - name: Install dependencies
+        if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --non-interactive
+      - name: Type check
+        run: yarn type-check
+      - name: Linter check
+        run: yarn lint
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+      - name: Run tests
+        run: yarn test
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-${{ matrix.node-version }}
+          path: ${{ env.client-directory }}playwright-report
+          retention-days: 30
+      - name: test build
+        run: yarn build
