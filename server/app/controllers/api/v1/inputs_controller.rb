@@ -13,17 +13,16 @@ module Api
       def create
         input = Input.new(input_params)
         input.user_id = current_api_v1_user.id
-        input.video.attach(params[:video])
+        video = params[:video]
+        ext = File.extname(video.original_filename).delete('.')
+        input.video.attach(video)
+        input.ext = ext
         if input.save
+          input.generate_gif
           render json: input, serializer: InputSerializer
         else
           render json: { errors: input.errors.full_messages }, status: :unprocessable_entity
         end
-      end
-
-      def show
-        input = Input.find(params[:id])
-        render json: input, serializer: InputSerializer
       end
 
       def destroy
