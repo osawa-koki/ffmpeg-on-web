@@ -2,11 +2,11 @@
 
 import React, { useContext } from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { toast } from 'react-toastify'
 
 import setting from '@/setting'
 
 import { SharedContext } from '../layout'
-import { toast } from 'react-toastify'
 
 export default function LoginPage (): React.JSX.Element {
   const { shared, setShared } = useContext(SharedContext)
