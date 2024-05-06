@@ -27,8 +27,8 @@ const pages: Page[] = [
   },
   {
     emoji: '🔒',
-    path: '/log/',
-    name: 'Log'
+    path: '/results/',
+    name: 'Results'
   }
 ]
 
